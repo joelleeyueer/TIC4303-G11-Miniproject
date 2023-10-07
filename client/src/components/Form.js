@@ -52,7 +52,7 @@ function Form() {
         setQualification('');
     };
 
-    const handleCancel = () => {
+    const handleLogOut = async () => {
         // Clear the form
         setName('');
         setEmailAddress('');
@@ -62,6 +62,18 @@ function Form() {
         setQualification('');
         navigate('/');
 
+        try {
+            // Make a GET request to your server's /logout endpoint
+            const response = await axios.post('/logout');
+
+            // Log the server's response
+            console.log(response.data);
+
+            // You can also redirect or update the UI based on the server's response here
+
+        } catch (error) {
+            console.error("There was an error with the GET request:", error);
+        }
     };
 
     return (
@@ -103,7 +115,7 @@ function Form() {
                         <div className="form-button-group">
                             <button type="submit">Submit</button>
                             <button type="button" onClick={handleReset}>Reset</button>
-                            <button type="button" onClick={handleCancel}>Logout</button>
+                            <button type="button" className="logout" onClick={handleLogOut}>Logout</button>
                         </div>
                     </div>
                 </form>

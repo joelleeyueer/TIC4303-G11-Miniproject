@@ -45,8 +45,8 @@
 }
 
 .container img {
-  width: 100vw;
-  height: 100vh;
+  width: 50%;
+  height: 50%;
   object-fit: cover;
 }
 
@@ -123,6 +123,14 @@
   width: 100%;
   max-width: 300px;
   margin: 0 auto;  /* To center the button group horizontally */
+}
+
+.end-button-group {
+  display: flex;
+  justify-content: space-between; 
+  width: 100%;
+  margin: 0 auto;  /* To center the button group horizontally */
+  gap: 20px;
 }
 
 
