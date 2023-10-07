@@ -64,48 +64,6 @@ function Form() {
 
     };
 
-    // return (
-    //     <div>
-    //         <h2>Submit Info</h2>
-    //         <form onSubmit={handleSubmit}>
-    //             <div>
-    //                 <label>Name:</label>
-    //                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-    //             </div>
-    //             <div>
-    //                 <label>Email Address:</label>
-    //                 <input type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
-    //             </div>
-    //             <div>
-    //                 <label>Phone Number:</label>
-    //                 <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-    //             </div>
-    //             <div>
-    //                 <label>Country:</label>
-    //                 <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} />
-    //             </div>
-    //             <div>
-    //                 <label>Gender:</label>
-    //                 <select value={gender} onChange={(e) => setGender(e.target.value)}>
-    //                     <option value="">Select...</option>
-    //                     <option value="male">Male</option>
-    //                     <option value="female">Female</option>
-    //                     <option value="other">Other</option>
-    //                 </select>
-    //             </div>
-    //             <div>
-    //                 <label>Qualification:</label>
-    //                 <textarea value={qualification} onChange={(e) => setQualification(e.target.value)}></textarea>
-    //             </div>
-    //             <div>
-    //                 <button type="submit">Submit</button>
-    //                 <button type="button" onClick={handleReset}>Reset</button>
-    //                 <button type="button" onClick={handleCancel}>Logout</button>
-    //             </div>
-    //         </form>
-    //     </div>
-    // );
-
     return (
         <div className="container">
             <div className="form-container">
