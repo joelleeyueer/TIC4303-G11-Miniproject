@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Form from './components/Form';
-// import ThankYou from './components/ThankYou';
+import End from './components/End';
 
 function App() {
   return (
@@ -11,8 +11,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<Login />} />
                     <Route exact path="/form" element={<Form />} />
-
-                    {/* Add other routes as needed */}
+                    <Route exact path="/end" element={<End />} />
                 </Routes>
             </div>
         </Router>

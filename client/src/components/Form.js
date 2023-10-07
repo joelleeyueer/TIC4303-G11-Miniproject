@@ -52,7 +52,7 @@ function Form() {
         setQualification('');
     };
 
-    const handleCancel = () => {
+    const handleLogOut = async () => {
         // Clear the form
         setName('');
         setEmailAddress('');
@@ -62,49 +62,19 @@ function Form() {
         setQualification('');
         navigate('/');
 
-    };
+        try {
+            // Make a GET request to your server's /logout endpoint
+            const response = await axios.post('/logout');
 
-    // return (
-    //     <div>
-    //         <h2>Submit Info</h2>
-    //         <form onSubmit={handleSubmit}>
-    //             <div>
-    //                 <label>Name:</label>
-    //                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-    //             </div>
-    //             <div>
-    //                 <label>Email Address:</label>
-    //                 <input type="text" value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} />
-    //             </div>
-    //             <div>
-    //                 <label>Phone Number:</label>
-    //                 <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-    //             </div>
-    //             <div>
-    //                 <label>Country:</label>
-    //                 <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} />
-    //             </div>
-    //             <div>
-    //                 <label>Gender:</label>
-    //                 <select value={gender} onChange={(e) => setGender(e.target.value)}>
-    //                     <option value="">Select...</option>
-    //                     <option value="male">Male</option>
-    //                     <option value="female">Female</option>
-    //                     <option value="other">Other</option>
-    //                 </select>
-    //             </div>
-    //             <div>
-    //                 <label>Qualification:</label>
-    //                 <textarea value={qualification} onChange={(e) => setQualification(e.target.value)}></textarea>
-    //             </div>
-    //             <div>
-    //                 <button type="submit">Submit</button>
-    //                 <button type="button" onClick={handleReset}>Reset</button>
-    //                 <button type="button" onClick={handleCancel}>Logout</button>
-    //             </div>
-    //         </form>
-    //     </div>
-    // );
+            // Log the server's response
+            console.log(response.data);
+
+            // You can also redirect or update the UI based on the server's response here
+
+        } catch (error) {
+            console.error("There was an error with the GET request:", error);
+        }
+    };
 
     return (
         <div className="container">
@@ -145,7 +115,7 @@ function Form() {
                         <div className="form-button-group">
                             <button type="submit">Submit</button>
                             <button type="button" onClick={handleReset}>Reset</button>
-                            <button type="button" onClick={handleCancel}>Logout</button>
+                            <button type="button" className="logout" onClick={handleLogOut}>Logout</button>
                         </div>
                     </div>
                 </form>
