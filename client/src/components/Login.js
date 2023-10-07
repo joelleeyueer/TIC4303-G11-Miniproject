@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("Username:", username);
         console.log("Password:", password);
+
+        const loginData = {
+            username: username,
+            password: password
+        };
+
+        try {
+            // Make a POST request to your server's /login endpoint
+            const response = await axios.post('/login', loginData);
+
+            // Log the server's response
+            console.log(response.data);
+
+            // You can also redirect or update the UI based on the server's response here
+
+        } catch (error) {
+            console.error("There was an error with the POST request:", error);
+        }
     }
     return (
         <div className="login-container">
