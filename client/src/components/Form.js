@@ -26,7 +26,7 @@ function Form() {
 
         try {
             // Replace 'YOUR_SERVER_ENDPOINT' with the actual endpoint URL where you'd like to send the POST request
-            const response = await axios.post('/form', formData);
+            const response = await axios.post('http://localhost:8080/form', formData);
             console.log('Server Response:', response.data);
 
             // Clear the form
@@ -36,6 +36,10 @@ function Form() {
             setCountry('');
             setGender('');
             setQualification('');
+
+            if (response.status === 200) {
+                navigate("/end");
+            }
 
         } catch (error) {
             console.error('There was an error submitting the form:', error);
