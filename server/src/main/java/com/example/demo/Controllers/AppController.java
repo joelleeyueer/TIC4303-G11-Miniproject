@@ -17,8 +17,11 @@ public class AppController {
         System.out.println("loginRequest is " + loginRequest);
         // Handle your login logic here.
         // After login, you can call getForm or redirect to "/form"
-
+        if (loginRequest==null) {
+            return new ResponseEntity<>("Login failed", null, 401);
+        }
         return ResponseEntity.ok("Login successful! " + loginRequest);
+
     }
 
     @CrossOrigin(origins = "*")

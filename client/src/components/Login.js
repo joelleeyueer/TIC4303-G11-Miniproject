@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -18,12 +20,15 @@ function Login() {
 
         try {
             // Make a POST request to your server's /login endpoint
-            const response = await axios.post('/login', loginData);
+            const response = await axios.post('http://localhost:8080/login', loginData);
 
             // Log the server's response
             console.log(response.data);
 
             // You can also redirect or update the UI based on the server's response here
+            if (response.status === 200) {
+                navigate("/form");
+            }
 
         } catch (error) {
             console.error("There was an error with the POST request:", error);
