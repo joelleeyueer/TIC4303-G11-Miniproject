@@ -12,7 +12,6 @@ function End() {
 
     const handleLogOut = async () => {
         try {
-            // Make a GET request to your server's /logout endpoint
             const response = await axios.post('/logout');
 
             // Log the server's response

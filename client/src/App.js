@@ -7,14 +7,14 @@ import End from './components/End';
 function App() {
   return (
     <Router>
-            <div className="App">
-                <Routes>
-                    <Route exact path="/" element={<Login />} />
-                    <Route exact path="/form" element={<Form />} />
-                    <Route exact path="/end" element={<End />} />
-                </Routes>
-            </div>
-        </Router>
+      <div className="App">
+          <Routes>
+              <Route exact path="/" element={<Login />} />
+              <Route exact path="/form" element={<Form />} />
+              <Route exact path="/end" element={<End />} />
+          </Routes>
+      </div>
+    </Router>
   );
 }
 
