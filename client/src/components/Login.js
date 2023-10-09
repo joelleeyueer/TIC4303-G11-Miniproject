@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import AuthService from '../services/AuthService';
 
 
 function Login() {
@@ -19,14 +19,9 @@ function Login() {
         };
 
         try {
-            // Make a POST request to your server's /login endpoint
-            const response = await axios.post('http://localhost:8080/auth/login', loginData);
+            await AuthService.login(loginData);
 
-            // Log the server's response
-            console.log(response.data);
-
-            // You can also redirect or update the UI based on the server's response here
-            if (response.status === 200) {
+            if (AuthService.isLoggedIn()) {
                 navigate("/form");
             }
 

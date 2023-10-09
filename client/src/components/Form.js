@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AuthService from '../services/AuthService';
 
 function Form() {
     const [name, setName] = useState('');
@@ -57,24 +58,10 @@ function Form() {
     };
 
     const handleLogOut = async () => {
-        // Clear the form
-        setName('');
-        setEmailAddress('');
-        setPhoneNumber('');
-        setCountry('');
-        setGender('');
-        setQualification('');
-        navigate('/');
 
         try {
-            // Make a GET request to your server's /logout endpoint
-            const response = await axios.post('/logout');
-
-            // Log the server's response
-            console.log(response.data);
-
-            // You can also redirect or update the UI based on the server's response here
-
+            await AuthService.logout();
+            navigate("/");
         } catch (error) {
             console.error("There was an error with the GET request:", error);
         }

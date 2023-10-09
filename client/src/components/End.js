@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AuthService from '../services/AuthService';
 
 function End() {
 
@@ -12,18 +12,12 @@ function End() {
 
     const handleLogOut = async () => {
         try {
-            const response = await axios.post('/logout');
-
-            // Log the server's response
-            console.log(response.data);
-
-            // You can also redirect or update the UI based on the server's response here
-
+            await AuthService.logout();
+            navigate("/");
         } catch (error) {
             console.error("There was an error with the GET request:", error);
         }
     };
-
 
     return (
         <div className="container">

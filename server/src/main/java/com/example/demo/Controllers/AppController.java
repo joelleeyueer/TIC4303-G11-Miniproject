@@ -17,7 +17,6 @@ public class AppController {
     @Autowired
     private FormService formService;
 
-    @CrossOrigin(origins = "*")
     @PostMapping(value = "/form", consumes = "application/json")
     public ResponseEntity<String> postForm(@RequestBody Form form) {
         if (!checkFormPopulated(form)) {
@@ -41,7 +40,6 @@ public class AppController {
         }
     }
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/test")
     public ResponseEntity<String> test() {
         return ResponseEntity.ok("Test successful!");
