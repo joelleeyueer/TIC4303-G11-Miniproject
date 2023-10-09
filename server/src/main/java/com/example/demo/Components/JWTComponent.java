@@ -1,8 +1,10 @@
 package com.example.demo.Components;
 
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -20,6 +22,16 @@ public class JWTComponent {
 
     
     public static final String SECRET_KEY = "sAQoARPxlomsjtkzKecU9nih3W+enOWag1XV5ZPo7FA=";
+
+    private final List<String> blacklistedTokens = new ArrayList<>();
+
+    public void blacklistToken(String token) {
+        blacklistedTokens.add(token);
+    }
+
+    public boolean isTokenBlacklisted(String token) {
+        return blacklistedTokens.contains(token);
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -49,7 +61,8 @@ public class JWTComponent {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return !isTokenBlacklisted(token) && username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+
     }
 
     public boolean validateToken(String token) {
@@ -75,7 +88,7 @@ public class JWTComponent {
         .setClaims(claims)
         .setSubject(username)
         .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) //30 min
         .signWith(getSignedKey(), SignatureAlgorithm.HS256).compact();
     }
 

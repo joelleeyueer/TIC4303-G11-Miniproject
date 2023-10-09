@@ -12,14 +12,14 @@ public class SpringUserDetails implements UserDetails{
     private String username;
     private String password;
     private Boolean isBanned;
-    private List<GrantedAuthority> authorities; // This is currently empty, but you might want to populate it later
+    private List<GrantedAuthority> authorities; 
 
 
     public SpringUserDetails(User user) {
         username=user.getUsername();
         password=user.getPassword();
         isBanned=user.getIsBanned();
-        this.authorities = Collections.emptyList(); // No roles, so an empty list
+        this.authorities = Collections.emptyList();
 
     }
 

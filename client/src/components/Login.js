@@ -20,7 +20,7 @@ function Login() {
 
         try {
             // Make a POST request to your server's /login endpoint
-            const response = await axios.post('http://localhost:8080/login', loginData);
+            const response = await axios.post('http://localhost:8080/auth/login', loginData);
 
             // Log the server's response
             console.log(response.data);

@@ -21,5 +21,16 @@ public class LoginService {
         userRepository.save(user);
         return "user " + user.getUsername() + " added to system successfully";
     }
+
+    public Boolean checkBannedUser(String username) {
+        User user = userRepository.findByUsername(username).get();
+        if (user.getIsBanned()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     
 }

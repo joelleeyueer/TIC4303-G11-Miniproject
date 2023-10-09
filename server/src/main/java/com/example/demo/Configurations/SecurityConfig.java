@@ -42,9 +42,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/**").permitAll() //no authentication needed
+                .requestMatchers("/auth/**").permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers("") //need authentication
+                .authorizeHttpRequests().requestMatchers("/form","/test") //need authentication
                 .authenticated().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(entryPoint)
                 .and()
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
