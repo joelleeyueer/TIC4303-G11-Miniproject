@@ -27,6 +27,9 @@ function Login() {
 
         } catch (error) {
             console.error("There was an error with the POST request:", error);
+            if (error.response && error.response.status === 401) {
+                window.alert("Username or password is incorrect!");
+            }
         }
     }
 
