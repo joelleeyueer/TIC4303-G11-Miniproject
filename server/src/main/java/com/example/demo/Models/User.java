@@ -1,5 +1,6 @@
 package com.example.demo.Models;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,21 +9,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Form {
+public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String emailAddress;
-    private String phoneNumber;
-    private String country;
-    private String gender;
-    private String qualification;
-
+    private String username;
+    private String password;
+    private Boolean isBanned;
+    
 }
