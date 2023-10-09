@@ -18,7 +18,7 @@ public class AppController {
     private FormService formService;
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/form")
+    @PostMapping(value = "/form", consumes = "application/json")
     public ResponseEntity<String> postForm(@RequestBody Form form) {
         if (!checkFormPopulated(form)) {
             return new ResponseEntity<>("Incomplete form data", null, 400);
@@ -35,9 +35,9 @@ public class AppController {
         form.getCountry() == null || form.getCountry().isEmpty() ||
         form.getGender() == null || form.getGender().isEmpty() ||
         form.getQualification() == null || form.getQualification().isEmpty()) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 
