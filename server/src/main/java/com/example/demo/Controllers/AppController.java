@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +20,25 @@ public class AppController {
     @CrossOrigin(origins = "*")
     @PostMapping("/form")
     public ResponseEntity<String> postForm(@RequestBody Form form) {
-        // Handle your form submission logic here.
-        // After form submission, you can call getEnd or redirect to "/end"
-        Form savedForm = formService.saveForm(form);
-        if (savedForm==null) {
-            return new ResponseEntity<>("Form submission failed", null, 401);
+        if (!checkFormPopulated(form)) {
+            return new ResponseEntity<>("Incomplete form data", null, 400);
         }
+        formService.saveForm(form);
+        
         return ResponseEntity.ok("Form submitted!");
+    }
+
+    private Boolean checkFormPopulated(Form form){
+        if (form.getName() == null || form.getName().isEmpty() || 
+        form.getEmailAddress() == null || form.getEmailAddress().isEmpty() ||
+        form.getPhoneNumber() == null || form.getPhoneNumber().isEmpty() ||
+        form.getCountry() == null || form.getCountry().isEmpty() ||
+        form.getGender() == null || form.getGender().isEmpty() ||
+        form.getQualification() == null || form.getQualification().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @CrossOrigin(origins = "*")
