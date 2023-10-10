@@ -89,6 +89,7 @@ public class JWTComponent {
         .setSubject(username)
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) //30 min
+        // .setExpiration(new Date(System.currentTimeMillis() + 1000 * 10)) //10 s
         .signWith(getSignedKey(), SignatureAlgorithm.HS256).compact();
     }
 

@@ -70,4 +70,17 @@ public class AuthenticationController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token format");
     }
+
+    @PostMapping("/validate-token")
+    public ResponseEntity<?> validateToken(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String jwtToken = authHeader.substring(7);
+            if(jwtComponent.validateToken(jwtToken)) {
+                return ResponseEntity.ok().body("Token is valid");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is invalid or expired");
+    }
+
 }

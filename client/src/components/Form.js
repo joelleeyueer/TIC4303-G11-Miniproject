@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
 
 function Form() {
+
     const [name, setName] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -13,8 +14,46 @@ function Form() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const checkToken = async () => {
+            const isValid = await AuthService.validateToken();
+            if (!isValid) {
+                navigate('/');
+                setTimeout(() => {
+                    alert('You are not logged in or session has timed out. Please log in again.');
+                }, 100);
+            }
+        };
+        checkToken();
+    }, []);
+    
+
+    const validateInput = () => {
+        const nameRegex = /^[a-zA-Z]{2,}$/;
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        const phoneRegex = /^\d+$/;
+
+        if (!nameRegex.test(name)) {
+            alert("Name must be at least 2 characters.");
+            return false;
+        }
+        if (!emailRegex.test(emailAddress)) {
+            alert("Enter a valid email.");
+            return false;
+        }
+
+        if (!phoneRegex.test(phoneNumber) || phoneNumber.length < 1) {
+            alert("Phone number must be at least 1 digit.");
+            return false;
+        }
+
+        return true;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validateInput()) return;
 
         const formData = {
             name: name,
@@ -26,11 +65,9 @@ function Form() {
         };
 
         try {
-            // Replace 'YOUR_SERVER_ENDPOINT' with the actual endpoint URL where you'd like to send the POST request
             const response = await axios.post('http://localhost:8080/form', formData);
             console.log('Server Response:', response.data);
 
-            // Clear the form
             setName('');
             setEmailAddress('');
             setPhoneNumber('');
@@ -39,16 +76,20 @@ function Form() {
             setQualification('');
 
             if (response.status === 200) {
+                window.alert("Form submitted successfully!");
                 navigate("/end");
             }
 
         } catch (error) {
             console.error('There was an error submitting the form:', error);
+            if (error.response && error.response.status === 403) {
+                alert('Form not submitted due to authorization error. Logging out...');
+                handleLogOut();
+            }
         }
     };
 
     const handleReset = () => {
-        // Clear the form
         setName('');
         setEmailAddress('');
         setPhoneNumber('');
@@ -60,7 +101,7 @@ function Form() {
     const handleLogOut = async () => {
 
         try {
-            await AuthService.logout();
+            await AuthService.logout(navigate);
             navigate("/");
         } catch (error) {
             console.error("There was an error with the GET request:", error);
@@ -99,8 +140,17 @@ function Form() {
                     </div>
                     <div className="form-field">
                         <label>Qualification:</label>
-                        <input type="text" value={qualification} onChange={(e) => setQualification(e.target.value)} />
+                        <select value={qualification} onChange={(e) => setQualification(e.target.value)}>
+                            <option value="">Select...</option>
+                            <option value="GCE 'O' Level/'N' level">GCE 'O' Level/'N' level</option>
+                            <option value="Higher Nitec/Nitec">Higher Nitec/Nitec</option>
+                            <option value="Polytechnic Diploma">Polytechnic Diploma</option>
+                            <option value="Bachelor's Degree">Bachelor's Degree</option>
+                            <option value="Master's Degree">Master's Degree</option>
+                            <option value="Doctorate (Ph.D.)">Doctorate (Ph.D.)</option>
+                        </select>
                     </div>
+
                     <br></br>
                     <div className='button-group'>
                         <div className="form-button-group">
