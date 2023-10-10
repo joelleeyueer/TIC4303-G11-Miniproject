@@ -12,8 +12,13 @@ public class FormService {
     @Autowired
     private FormRepository formRepository;
 
-    public Form saveForm(Form form) {
-        return formRepository.save(form);
+    public boolean saveForm(Form form) {
+        try {
+            formRepository.save(form);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
     
 }
