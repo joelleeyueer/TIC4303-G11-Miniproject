@@ -7,18 +7,18 @@ const ProtectedRoute = ({ element, ...rest }) => {
 
     useEffect(() => {
         if (!AuthService.isLoggedIn()) {
-            navigate('/'); // Using the navigate function within useEffect
+            navigate('/');
             setTimeout(() => {
                 alert('You are not logged in. Redirecting to login page.');
             }, 100);
         }
-    }, [navigate]); // Depend on the navigate function to avoid redundant triggers
+    }, [navigate]);
 
     if (!AuthService.isLoggedIn()) {
-        return null; // Render nothing for this route until useEffect runs
+        return null;
     }
     
-    return element; // Render the protected route's element
+    return element;
 };
 
 export default ProtectedRoute;
