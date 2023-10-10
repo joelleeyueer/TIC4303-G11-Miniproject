@@ -66,7 +66,6 @@ function Form() {
 
         try {
             const response = await axios.post('http://localhost:8080/form', formData);
-            console.log('Server Response:', response.data);
 
             setName('');
             setEmailAddress('');

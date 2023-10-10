@@ -10,8 +10,6 @@ function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Username:", username);
-        console.log("Password:", password);
 
         const loginData = {
             username: username,
