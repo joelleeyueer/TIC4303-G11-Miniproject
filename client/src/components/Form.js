@@ -32,6 +32,7 @@ function Form() {
         const nameRegex = /^[a-zA-Z]{2,}$/;
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         const phoneRegex = /^\d+$/;
+        const countryRegex = /^[a-zA-Z]/;
 
         if (!nameRegex.test(name)) {
             alert("Name must be at least 2 characters.");
@@ -44,6 +45,11 @@ function Form() {
 
         if (!phoneRegex.test(phoneNumber) || phoneNumber.length < 1) {
             alert("Phone number must be at least 1 digit.");
+            return false;
+        }
+
+        if (!countryRegex.test(country)) {
+            alert("Please input a valid country.");
             return false;
         }
 
@@ -66,7 +72,6 @@ function Form() {
 
         try {
             const response = await axios.post('http://localhost:8080/form', formData);
-            console.log('Server Response:', response.data);
 
             setName('');
             setEmailAddress('');
