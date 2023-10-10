@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import AuthService from '../services/AuthService';
 
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -17,16 +19,17 @@ function Login() {
         };
 
         try {
-            // Make a POST request to your server's /login endpoint
-            const response = await axios.post('/login', loginData);
+            await AuthService.login(loginData);
 
-            // Log the server's response
-            console.log(response.data);
-
-            // You can also redirect or update the UI based on the server's response here
+            if (AuthService.isLoggedIn()) {
+                navigate("/form");
+            }
 
         } catch (error) {
             console.error("There was an error with the POST request:", error);
+            if (error.response && error.response.status === 401) {
+                window.alert("Username or password is incorrect!");
+            }
         }
     }
 

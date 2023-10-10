@@ -1,10 +1,22 @@
-import React from 'react';
-import axios from 'axios';
+import React,{ useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthService from '../services/AuthService';
 
 function End() {
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const checkToken = async () => {
+            const isValid = await AuthService.validateToken();
+            if (!isValid) {
+                navigate('/');
+                setTimeout(() => {
+                    alert('You are not logged in or session has timed out. Please log in again.');
+                }, 100);            }
+        };
+        checkToken();
+    }, []);
 
     const handleBack = () => {
         navigate('/form');
@@ -12,19 +24,12 @@ function End() {
 
     const handleLogOut = async () => {
         try {
-            // Make a GET request to your server's /logout endpoint
-            const response = await axios.post('/logout');
-
-            // Log the server's response
-            console.log(response.data);
-
-            // You can also redirect or update the UI based on the server's response here
-
+            await AuthService.logout(navigate);
+            navigate("/");
         } catch (error) {
             console.error("There was an error with the GET request:", error);
         }
     };
-
 
     return (
         <div className="container">
