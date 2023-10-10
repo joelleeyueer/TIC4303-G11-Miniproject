@@ -76,11 +76,15 @@ public class AuthenticationController {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String jwtToken = authHeader.substring(7);
+            if(jwtComponent.isTokenBlacklisted(jwtToken)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is blacklisted");
+            }
             if(jwtComponent.validateToken(jwtToken)) {
                 return ResponseEntity.ok().body("Token is valid");
             }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is invalid or expired");
     }
+
 
 }
